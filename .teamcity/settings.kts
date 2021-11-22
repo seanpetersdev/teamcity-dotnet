@@ -113,6 +113,13 @@ object Compile : BuildType({
                 echo "##teamcity[setParameter name='env.RELEASE_NUMBER' value='${'$'}RELEASE_NUMBER']"
             """.trimIndent()
         }
+        script {
+            name = "test kotlin"
+            scriptContent = """
+                #!/bin/bash
+                echo "This is just a test"
+            """.trimIndent()
+        }
     }
 
     triggers {
