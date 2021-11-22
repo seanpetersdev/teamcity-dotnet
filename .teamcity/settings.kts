@@ -50,9 +50,9 @@ object Compile : BuildType({
     artifactRules = "TeamCityDotNet/bin/Debug/netcoreapp3.1 => TeamCityDotNet.zip"
 
     params {
+        param("URL", "https://blahblah.com")
         param("env.RELEASE_NUMBER", "")
         param("env.SESSION_TOKEN", "test")
-        param("URL", "https://blahblah.com")
     }
 
     vcs {
@@ -106,6 +106,7 @@ object Compile : BuildType({
         }
         script {
             name = "call REST API with params"
+            enabled = false
             scriptContent = """
                 #!/bin/bash
                 curl -d '{"buildType":{"id": "DotnetHelloWorld_Compile"},"properties": {"property": [{ "name": "env.RELEASE_NUMBER", "value": "v1.0.%build.counter%"}]}}' -H "Content-Type: application/json" -H "Authorization: Bearer eyJ0eXAiOiAiVENWMiJ9.c0pDUlhHb05maWppOU0yTUpSY0ZoeFRITkdB.NWI2YjljYWMtOTBiYy00NDIyLTg2YzctMDkzNjg3MGE3NTJh" -X POST http://teamcity-server:8111/app/rest/buildQueue
