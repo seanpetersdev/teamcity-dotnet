@@ -115,6 +115,7 @@ object Compile : BuildType({
         }
         script {
             name = "test kotlin"
+            enabled = false
             scriptContent = """
                 #!/bin/bash
                 echo "This is just a test"
