@@ -84,10 +84,6 @@ object Compile : BuildType({
                     >&2 echo "Deployment version is not set"
                     exit 1
                 fi
-                if [[ -z ${'$'}SESSION_TOKEN ]]; then
-                    >&2 echo "SESSION_TOKEN params not set"
-                    exit 1
-                fi
                 #if [[ -z ${'$'}URL ]]; then
                 #    >&2 echo "URL not set"
                 #    exit 1
