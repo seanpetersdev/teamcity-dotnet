@@ -51,6 +51,7 @@ object Compile : BuildType({
 
     params {
         param("BuildApiEndpoint", "http://teamcity-server:8111/app/rest/buildQueue")
+        param("team_city_stage_server", "http://teamcity-server:8111")
         param("BuildConfigurationId", "DotnetHelloWorld_Compile")
         password("DeployBearerToken", "credentialsJSON:be2340ee-fa95-4882-8491-4013dfaa46e1")
         param("env.RELEASE_NUMBER", "")
@@ -123,8 +124,8 @@ object Compile : BuildType({
             name = "call REST API with params and vars and csrf"
             scriptContent = """
                 #!/bin/bash
-                RESPONSE=`curl -H "Authorization: Bearer %BearerToken%" %CsrfTokenEndpoint%`
-                curl -d '{"buildType":{"id": "%BuildConfigurationId%"},"properties": {"property": [{ "name": "env.RELEASE_NUMBER", "value": "v1.0.%build.counter%"}]}}' -H "Content-Type: application/json" -H "Authorization: Bearer %BearerToken%" -H "X-TC-CSRF-Token: ${'$'}RESPONSE" -X POST %BuildApiEndpoint%
+                RESPONSE=`curl -H "Authorization: Bearer %DeployBearerToken%" %CsrfTokenEndpoint%`
+                curl -d '{"buildType":{"id": "%BuildConfigurationId%"},"properties": {"property": [{ "name": "env.RELEASE_NUMBER", "value": "v1.0.%build.counter%"}]}}' -H "Content-Type: application/json" -H "Authorization: Bearer %DeployBearerToken%" -H "X-TC-CSRF-Token: ${'$'}RESPONSE" -X POST %BuildApiEndpoint%
             """.trimIndent()
         }
     }
