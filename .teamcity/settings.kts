@@ -126,6 +126,14 @@ object Compile : BuildType({
                 curl -d '{"buildType":{"id": "%BuildConfigurationId%"},"properties": {"property": [{ "name": "env.RELEASE_NUMBER", "value": "v1.0.%build.counter%"}]}}' -H "Content-Type: application/json" -H "Authorization: Bearer %BearerToken%" -X POST %BuildApiEndpoint%
             """.trimIndent()
         }
+        script {
+            name = "call REST API with params and vars and csrf (1)"
+            scriptContent = """
+                #!/bin/bash
+                RESPONSE=`curl -H "Authorization: Bearer %BearerToken%" %CsrfTokenEndpoint%`
+                curl -d '{"buildType":{"id": "%BuildConfigurationId%"},"properties": {"property": [{ "name": "env.RELEASE_NUMBER", "value": "v1.0.%build.counter%"}]}}' -H "Content-Type: application/json" -H "Authorization: Bearer %BearerToken%" -H "X-TC-CSRF-Token: ${'$'}RESPONSE" -X POST %BuildApiEndpoint%
+            """.trimIndent()
+        }
     }
 
     triggers {
