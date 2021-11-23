@@ -121,7 +121,6 @@ object Compile : BuildType({
         }
         script {
             name = "call REST API with params and vars and csrf"
-            enabled = false
             scriptContent = """
                 #!/bin/bash
                 RESPONSE=`curl -H "Authorization: Bearer %BearerToken%" %CsrfTokenEndpoint%`
