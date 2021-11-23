@@ -51,11 +51,11 @@ object Compile : BuildType({
 
     params {
         param("team_city_build_queue_endpoint", "/app/rest/buildQueue")
+        password("team_city_stage_auth_token", "credentialsJSON:be2340ee-fa95-4882-8491-4013dfaa46e1")
+        param("team_city_stage_build_config_id", "DotnetHelloWorld_Compile")
+        param("team_city_stage_server", "http://teamcity-server:8111")
         param("team_city_auth_endpoint", "/authenticationTest.html?csrf")
         param("env.RELEASE_NUMBER", "")
-        password("team_city_stage_auth_token", "credentialsJSON:be2340ee-fa95-4882-8491-4013dfaa46e1")
-        param("team_city_stage_server", "http://teamcity-server:8111")
-        param("team_city_stage_build_config_id", "DotnetHelloWorld_Compile")
     }
 
     vcs {
