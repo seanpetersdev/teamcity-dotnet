@@ -50,6 +50,7 @@ object Compile : BuildType({
     artifactRules = "TeamCityDotNet/bin/Debug/netcoreapp3.1 => TeamCityDotNet.zip"
 
     params {
+        password("BearerToken", "credentialsJSON:be2340ee-fa95-4882-8491-4013dfaa46e1")
         param("URL", "https://blahblah.com")
         param("env.RELEASE_NUMBER", "")
         param("env.SESSION_TOKEN", "test")
