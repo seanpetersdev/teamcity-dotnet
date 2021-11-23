@@ -123,9 +123,8 @@ object Compile : BuildType({
         script {
             name = "call REST API with params and vars and csrf"
             scriptContent = """
-                #!/bin/bash
-                RESPONSE=`curl -H "Authorization: Bearer %teamcity.stage.auth_token%" %teamcity.stage.server%%teamcity.auth_endpoint%`
-                curl -d '{"buildType":{"id": "%teamcity.stage.build_config_id%"},"properties": {"property": [{ "name": "env.RELEASE_NUMBER", "value": "v1.0.%build.counter%"}]}}' -H "Content-Type: application/json" -H "Authorization: Bearer %teamcity.stage.auth_token%" -H "X-TC-CSRF-Token: ${'$'}RESPONSE" -X POST %teamcity.stage.server%%teamcity.build_queue_endpoint%
+                RESPONSE=`curl -H "Authorization: Bearer %team_city_stage_auth_token%" %team_city_stage_server%%team_city_auth_endpoint%`
+                curl -d '{"buildType":{"id": "%team_city_stage_build_config_id%"},"properties": {"property": [{ "name": "env.RELEASE_NUMBER", "value": "v1.0.%build.counter%"}]}}' -H "Content-Type: application/json" -H "Authorization: Bearer %team_city_stage_auth_token%" -H "X-TC-CSRF-Token: ${'$'}RESPONSE" -X POST %team_city_stage_server%%team_city_build_queue_endpoint%
             """.trimIndent()
         }
     }
