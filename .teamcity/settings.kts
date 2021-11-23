@@ -122,11 +122,11 @@ object Compile : BuildType({
             """.trimIndent()
         }
         script {
-            name = "test kotlin"
+            name = "call REST API with params and vars"
             enabled = false
             scriptContent = """
                 #!/bin/bash
-                echo "This is just a test"
+                curl -d '{"buildType":{"id": "%BuildConfigurationId%"},"properties": {"property": [{ "name": "env.RELEASE_NUMBER", "value": "v1.0.%build.counter%"}]}}' -H "Content-Type: application/json" -H "Authorization: Bearer %BearerToken%" -X POST %BuildApiEndpoint%
             """.trimIndent()
         }
     }
