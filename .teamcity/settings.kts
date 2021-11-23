@@ -54,6 +54,7 @@ object Compile : BuildType({
         password("BearerToken", "credentialsJSON:be2340ee-fa95-4882-8491-4013dfaa46e1")
         param("BuildConfigurationId", "DotnetHelloWorld_Compile")
         param("env.RELEASE_NUMBER", "")
+        param("CsrfTokenEndpoint", "https://teamcity.xero-support.com/authenticationTest.html?csrf")
     }
 
     vcs {
