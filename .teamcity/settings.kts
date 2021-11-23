@@ -50,12 +50,13 @@ object Compile : BuildType({
     artifactRules = "TeamCityDotNet/bin/Debug/netcoreapp3.1 => TeamCityDotNet.zip"
 
     params {
-        param("BuildApiEndpoint", "http://teamcity-server:8111/app/rest/buildQueue")
-        param("team_city_stage_server", "http://teamcity-server:8111")
-        param("BuildConfigurationId", "DotnetHelloWorld_Compile")
         password("DeployBearerToken", "credentialsJSON:be2340ee-fa95-4882-8491-4013dfaa46e1")
         param("env.RELEASE_NUMBER", "")
         param("CsrfTokenEndpoint", "http://teamcity-server:8111/authenticationTest.html?csrf")
+        param("BuildApiEndpoint", "http://teamcity-server:8111/app/rest/buildQueue")
+        param("team_city_stage_server", "http://teamcity-server:8111")
+        param("team_city_stage_build_config_id", "DotnetHelloWorld_Compile")
+        param("BuildConfigurationId", "DotnetHelloWorld_Compile")
     }
 
     vcs {
