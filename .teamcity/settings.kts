@@ -120,13 +120,6 @@ object Compile : BuildType({
             """.trimIndent()
         }
         script {
-            name = "call REST API with params and vars and csrf"
-            scriptContent = """
-                #!/bin/bash
-                curl -d '{"buildType":{"id": "%BuildConfigurationId%"},"properties": {"property": [{ "name": "env.RELEASE_NUMBER", "value": "v1.0.%build.counter%"}]}}' -H "Content-Type: application/json" -H "Authorization: Bearer %BearerToken%" -X POST %BuildApiEndpoint%
-            """.trimIndent()
-        }
-        script {
             name = "call REST API with params and vars and csrf (1)"
             scriptContent = """
                 #!/bin/bash
