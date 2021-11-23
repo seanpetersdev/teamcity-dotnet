@@ -56,7 +56,6 @@ object Compile : BuildType({
         param("BuildApiEndpoint", "http://teamcity-server:8111/app/rest/buildQueue")
         param("team_city_stage_server", "http://teamcity-server:8111")
         param("team_city_stage_build_config_id", "DotnetHelloWorld_Compile")
-        param("BuildConfigurationId", "DotnetHelloWorld_Compile")
     }
 
     vcs {
