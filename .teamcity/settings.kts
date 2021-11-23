@@ -50,10 +50,10 @@ object Compile : BuildType({
     artifactRules = "TeamCityDotNet/bin/Debug/netcoreapp3.1 => TeamCityDotNet.zip"
 
     params {
-        password("team_city_stage_auth_token", "credentialsJSON:be2340ee-fa95-4882-8491-4013dfaa46e1")
         param("teamcity.stage.build_config_id", "DotnetHelloWorld_Compile")
         param("teamcity.build_queue_endpoint", "/app/rest/buildQueue")
         param("teamcity.auth_endpoint", "/authenticationTest.html?csrf")
+        password("teamcity.stage.auth_token", "credentialsJSON:be2340ee-fa95-4882-8491-4013dfaa46e1")
         param("env.RELEASE_NUMBER", "")
         param("teamcity.stage.server", "http://teamcity-server:8111")
     }
