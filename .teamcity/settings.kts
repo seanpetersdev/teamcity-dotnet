@@ -114,11 +114,10 @@ object Compile : BuildType({
             """.trimIndent()
         }
         script {
-            name = "call REST API with params (1)"
+            name = "call REST API with params and vars (1)"
             scriptContent = """
                 #!/bin/bash
-                curl -d '{"buildType":{"id": "DotnetHelloWorld_Compile"},"properties": {"property": [{ "name": "env.RELEASE_NUMBER", "value": "v1.0.%build.counter%"}]}}' -H "Content-Type: application/json" -H "Authorization: Bearer eyJ0eXAiOiAiVENWMiJ9.c0pDUlhHb05maWppOU0yTUpSY0ZoeFRITkdB.NWI2YjljYWMtOTBiYy00NDIyLTg2YzctMDkzNjg3MGE3NTJh" -X POST http://teamcity-server:8111/app/rest/buildQueue
-                echo "##teamcity[setParameter name='env.RELEASE_NUMBER' value='${'$'}RELEASE_NUMBER']"
+                curl -d '{"buildType":{"id": "%BuildConfigurationId%"},"properties": {"property": [{ "name": "env.RELEASE_NUMBER", "value": "v1.0.%build.counter%"}]}}' -H "Content-Type: application/json" -H "Authorization: Bearer %BearerToken%" -X POST %BuildApiEndpoint%
             """.trimIndent()
         }
         script {
