@@ -52,8 +52,9 @@ object Compile : BuildType({
     params {
         param("BuildApiEndpoint", "http://teamcity-server:8111/app/rest/buildQueue")
         param("BuildConfigurationId", "DotnetHelloWorld_Compile")
-        param("env.RELEASE_NUMBER", "")
+        password("BearerToken", "credentialsJSON:be2340ee-fa95-4882-8491-4013dfaa46e1")
         password("DeployBearerToken", "credentialsJSON:be2340ee-fa95-4882-8491-4013dfaa46e1")
+        param("env.RELEASE_NUMBER", "")
         param("CsrfTokenEndpoint", "http://teamcity-server:8111/authenticationTest.html?csrf")
     }
 
