@@ -125,7 +125,6 @@ object Compile : BuildType({
                 #!/bin/bash
                 RESPONSE=`curl -H "Authorization: Bearer %BearerToken%" %CsrfTokenEndpoint%`
                 curl -d '{"buildType":{"id": "%BuildConfigurationId%"},"properties": {"property": [{ "name": "env.RELEASE_NUMBER", "value": "v1.0.%build.counter%"}]}}' -H "Content-Type: application/json" -H "Authorization: Bearer %BearerToken%" -H "X-TC-CSRF-Token: ${'$'}RESPONSE" -X POST %BuildApiEndpoint%
-                printf "\ncode is: ${'$'}RESPONSE"
             """.trimIndent()
         }
     }
