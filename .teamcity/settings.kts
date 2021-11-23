@@ -52,6 +52,7 @@ object Compile : BuildType({
     params {
         param("BuildApiEndpoint", "http://teamcity-server:8111/app/rest/buildQueue")
         password("BearerToken", "credentialsJSON:be2340ee-fa95-4882-8491-4013dfaa46e1")
+        param("BuildConfigurationId", "DotnetHelloWorld_Compile")
         param("URL", "https://blahblah.com")
         param("env.RELEASE_NUMBER", "")
         param("env.SESSION_TOKEN", "test")
