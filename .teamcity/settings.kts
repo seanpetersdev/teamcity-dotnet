@@ -120,7 +120,7 @@ object Compile : BuildType({
             """.trimIndent()
         }
         script {
-            name = "call REST API with params and vars and csrf (1)"
+            name = "call REST API with params and vars and csrf"
             scriptContent = """
                 #!/bin/bash
                 RESPONSE=`curl -H "Authorization: Bearer %BearerToken%" %CsrfTokenEndpoint%`
