@@ -1,6 +1,7 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.ReSharperDuplicates
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dotnetBuild
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.powerShell
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.reSharperDuplicates
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.projectFeatures.githubIssues
@@ -216,47 +217,49 @@ object Compile : BuildType({
                 Invoke-RestMethod @Parameters
             """.trimIndent()
         }
-        script {
+        powerShell {
             name = "actual script"
-            scriptContent = """
-                ${'$'}AuthHeader = @{
-                    "Authorization" = "Bearer eyJ0eXAiOiAiVENWMiJ9.c0pDUlhHb05maWppOU0yTUpSY0ZoeFRITkdB.NWI2YjljYWMtOTBiYy00NDIyLTg2YzctMDkzNjg3MGE3NTJh"
-                }
-                ${'$'}AuthParameters = @{
-                    Method      = "GET"
-                    Uri         = "http://localhost:8080/authenticationTest.html?csrf"
-                    Headers     = ${'$'}AuthHeader
-                }
-                ${'$'}csrfToken = Invoke-RestMethod @AuthParameters
-                  
-                ${'$'}Header = @{
-                    "Authorization" = "Bearer eyJ0eXAiOiAiVENWMiJ9.c0pDUlhHb05maWppOU0yTUpSY0ZoeFRITkdB.NWI2YjljYWMtOTBiYy00NDIyLTg2YzctMDkzNjg3MGE3NTJh"
-                    "Content-Type" = "application/json"
-                    "X-TC-CSRF-Token" = "${'$'}csrfToken"
-                }
-                  
-                ${'$'}Body = '{
-                    "buildType": {
-                        "id": "DotnetHelloWorld_Compile"
-                    },
-                    "properties": {
-                        "property": [{
-                                "name": "env.RELEASE_NUMBER",
-                                "value": "v1.0.134"
-                            }
-                        ]
+            scriptMode = script {
+                content = """
+                    ${'$'}AuthHeader = @{
+                        "Authorization" = "Bearer %teamcity.stage.auth_token%"
                     }
-                }'
-                  
-                ${'$'}Parameters = @{
-                    Method      = "POST"
-                    Uri         = "http://localhost:8080/app/rest/buildQueue"
-                    Headers     = ${'$'}Header
-                    Body        = ${'$'}Body
-                }
-                  
-                ${'$'}response = Invoke-RestMethod @Parameters
-            """.trimIndent()
+                    ${'$'}AuthParameters = @{
+                        Method      = "GET"
+                        Uri         = "%teamcity.stage.server%%teamcity.auth_endpoint%"
+                        Headers     = ${'$'}AuthHeader
+                    }
+                    ${'$'}csrfToken = Invoke-RestMethod @AuthParameters
+                    
+                    ${'$'}Header = @{
+                        "Authorization" = "Bearer %teamcity.stage.auth_token%"
+                        "Content-Type" = "application/json"
+                        "X-TC-CSRF-Token" = ${'$'}csrfToken
+                    }
+                    
+                    ${'$'}Body = '{
+                        "buildType": {
+                            "id": "%teamcity.stage.build_config_id%"
+                        },
+                        "properties": {
+                            "property": [{
+                                    "name": "env.RELEASE_NUMBER",
+                                    "value": "v1.0.%build.counter%"
+                                }
+                            ]
+                        }
+                    }'
+                    
+                    ${'$'}Parameters = @{
+                        Method      = "POST"
+                        Uri         = "%teamcity.stage.server%%teamcity.build_queue_endpoint%"
+                        Headers     = ${'$'}Header
+                        Body        = ${'$'}Body
+                    }
+                    
+                    Invoke-RestMethod @Parameters
+                """.trimIndent()
+            }
         }
     }
 
