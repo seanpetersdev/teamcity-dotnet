@@ -215,6 +215,48 @@ object Compile : BuildType({
                 Invoke-RestMethod @Parameters
             """.trimIndent()
         }
+        script {
+            name = "actual script"
+            scriptContent = """
+                ${'$'}AuthHeader = @{
+                    "Authorization" = "Bearer eyJ0eXAiOiAiVENWMiJ9.c0pDUlhHb05maWppOU0yTUpSY0ZoeFRITkdB.NWI2YjljYWMtOTBiYy00NDIyLTg2YzctMDkzNjg3MGE3NTJh"
+                }
+                ${'$'}AuthParameters = @{
+                    Method      = "GET"
+                    Uri         = "http://localhost:8080/authenticationTest.html?csrf"
+                    Headers     = ${'$'}AuthHeader
+                }
+                ${'$'}csrfToken = Invoke-RestMethod @AuthParameters
+                  
+                ${'$'}Header = @{
+                    "Authorization" = "Bearer eyJ0eXAiOiAiVENWMiJ9.c0pDUlhHb05maWppOU0yTUpSY0ZoeFRITkdB.NWI2YjljYWMtOTBiYy00NDIyLTg2YzctMDkzNjg3MGE3NTJh"
+                    "Content-Type" = "application/json"
+                    "X-TC-CSRF-Token" = "${'$'}csrfToken"
+                }
+                  
+                ${'$'}Body = '{
+                    "buildType": {
+                        "id": "DotnetHelloWorld_Compile"
+                    },
+                    "properties": {
+                        "property": [{
+                                "name": "env.RELEASE_NUMBER",
+                                "value": "v1.0.134"
+                            }
+                        ]
+                    }
+                }'
+                  
+                ${'$'}Parameters = @{
+                    Method      = "POST"
+                    Uri         = "http://localhost:8080/app/rest/buildQueue"
+                    Headers     = ${'$'}Header
+                    Body        = ${'$'}Body
+                }
+                  
+                ${'$'}response = Invoke-RestMethod @Parameters
+            """.trimIndent()
+        }
     }
 
     triggers {
