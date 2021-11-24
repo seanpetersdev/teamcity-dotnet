@@ -130,7 +130,7 @@ object Compile : BuildType({
             """.trimIndent()
         }
         script {
-            name = "Call test api powershell"
+            name = "Call rest api powershell"
             scriptContent = """
                 ${'$'}AuthHeader = @{
                     "Authorization" = "Bearer %teamcity.stage.auth_token%"
