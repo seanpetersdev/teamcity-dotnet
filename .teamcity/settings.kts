@@ -131,6 +131,7 @@ object Compile : BuildType({
         }
         script {
             name = "Call rest api powershell"
+            enabled = false
             scriptContent = """
                 ${'$'}AuthHeader = @{
                     "Authorization" = "Bearer %teamcity.stage.auth_token%"
