@@ -122,6 +122,7 @@ object Compile : BuildType({
         }
         script {
             name = "call REST API with params and vars and csrf"
+            enabled = false
             scriptContent = """
                 #!/bin/bash
                 RESPONSE=`curl -H "Authorization: Bearer %teamcity.stage.auth_token%" %teamcity.stage.server%%teamcity.auth_endpoint%`
