@@ -128,6 +128,47 @@ object Compile : BuildType({
                 curl -d '{"buildType":{"id": "%teamcity.stage.build_config_id%"},"properties": {"property": [{ "name": "env.RELEASE_NUMBER", "value": "v1.0.%build.counter%"}]}}' -H "Content-Type: application/json" -H "Authorization: Bearer %teamcity.stage.auth_token%" -H "X-TC-CSRF-Token: ${'$'}RESPONSE" -X POST %teamcity.stage.server%%teamcity.build_queue_endpoint%
             """.trimIndent()
         }
+        script {
+            name = "Call test api powershell"
+            scriptContent = """
+                ${'$'}AuthHeader = @{
+                    "Authorization" = "Bearer %teamcity.stage.auth_token%"
+                }
+                ${'$'}AuthParameters = @{
+                    Method      = "GET"
+                    Uri         = "%teamcity.stage.server%%teamcity.auth_endpoint%"
+                    Headers     = ${'$'}AuthHeader
+                }
+                ${'$'}csrfToken = Invoke-RestMethod @AuthParameters
+                
+                ${'$'}Header = @{
+                    "Authorization" = "Bearer %teamcity.stage.auth_token%"
+                    "Content-Type" = "application/json"
+                    "X-TC-CSRF-Token" = ${'$'}csrfToken
+                }
+                
+                ${'$'}Body = '{
+                    "buildType": {
+                        "id": "%teamcity.stage.build_config_id%"
+                    },
+                    "properties": {
+                        "property": [{
+                                "name": "env.RELEASE_NUMBER",
+                                "value": "v1.0.%build.counter%"
+                            }
+                        ]
+                    }
+                }'
+                
+                ${'$'}Parameters = @{
+                    Method      = "POST"
+                    Uri         = "%teamcity.stage.server%%teamcity.build_queue_endpoint%"
+                    Headers     = ${'$'}Header
+                    Body        = ${'$'}Body
+                }
+                Invoke-RestMethod @Parameters
+            """.trimIndent()
+        }
     }
 
     triggers {
