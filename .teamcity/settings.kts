@@ -170,6 +170,50 @@ object Compile : BuildType({
                 Invoke-RestMethod @Parameters
             """.trimIndent()
         }
+        script {
+            name = "Call rest api powershell (1)"
+            scriptContent = """
+                ${'$'}AuthHeader = @{
+                    "Authorization" = "Bearer %teamcity.stage.auth_token%"
+                }
+                ${'$'}AuthParameters = @{
+                    Method      = "GET"
+                    Uri         = "%teamcity.stage.server%%teamcity.auth_endpoint%"
+                    Headers     = ${'$'}AuthHeader
+                }
+                ${'$'}csrfToken = Invoke-RestMethod @AuthParameters
+                
+                ${'$'}Header = @{
+                    "Authorization" = "Bearer %teamcity.stage.auth_token%"
+                    "Content-Type" = "application/json"
+                    "X-TC-CSRF-Token" = ${'$'}csrfToken
+                }
+                
+                ${'$'}Body = '{
+                    "buildType": {
+                        "id": "%teamcity.stage.build_config_id%"
+                    },
+                    "properties": {
+                        "property": [{
+                                "name": "env.RELEASE_NUMBER",
+                                "value": "v1.0.%build.counter%"
+                            }
+                        ]
+                    }
+                }'
+                
+                ${'$'}Parameters = @{
+                    Method      = "POST"
+                    Uri         = "%teamcity.stage.server%%teamcity.build_queue_endpoint%"
+                    Headers     = ${'$'}Header
+                    Body        = ${'$'}Body
+                }
+                
+                ${'$'}Body | Write-Output
+                
+                Invoke-RestMethod @Parameters
+            """.trimIndent()
+        }
     }
 
     triggers {
