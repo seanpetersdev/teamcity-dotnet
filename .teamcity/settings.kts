@@ -276,6 +276,29 @@ object Compile : BuildType({
                 }' -H "Authorization: Bearer %deploytrack.token%" -XPOST %deploytrack.url%
             """.trimIndent()
         }
+        script {
+            name = "Set deployer"
+            scriptContent = """
+                #!/bin/bash
+                
+                if [[ "Unknown" == "Unknown" ]]
+                then
+                    # set the deployment user for use if the deploy is triggered by git
+                    if [[ "%teamcity.build.triggeredBy.username%" == "n/a" ]]
+                    then
+                        gituser=${'$'}(git log -1 --pretty=format:'%an')
+                        echo "Deployment triggered by  ${'$'}{gituser}"
+                        echo "##teamcity[setParameter name='deployment.user' value='${'$'}{gituser}']"
+                    else
+                        echo "Deployment triggered by  %teamcity.build.triggeredBy.username%"
+                        echo "##teamcity[setParameter name='deployment.user' value='%teamcity.build.triggeredBy.username%']"
+                    fi
+                else
+                    echo "Deployment triggered by  Unknown"
+                    echo "##teamcity[setParameter name='deployment.user' value='Unknown']"
+                fi
+            """.trimIndent()
+        }
     }
 
     triggers {
