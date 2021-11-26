@@ -261,6 +261,21 @@ object Compile : BuildType({
                 """.trimIndent()
             }
         }
+        script {
+            name = "Notify Deploy Track"
+            scriptContent = """
+                #!/usr/bin/env bash
+                set -euo pipefail
+                curl -fsS -H "Content-Type: application/json" -d '{
+                    "kotahi_id":"%component.uuid%",
+                    "environment":"%component.deployment_environment%",
+                    "commit":"%build.vcs.number%",
+                    "status": "in_progress",
+                    "deployer": "%deployment.user%",
+                    "url": "%teamcity.serverUrl%/viewLog.html?buildId=%teamcity.build.id%&buildTypeId=%system.teamcity.buildType.id%"
+                }' -H "Authorization: Bearer %deploytrack.token%" -XPOST %deploytrack.url%
+            """.trimIndent()
+        }
     }
 
     triggers {
