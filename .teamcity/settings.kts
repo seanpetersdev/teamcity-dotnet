@@ -219,6 +219,7 @@ object Compile : BuildType({
         }
         powerShell {
             name = "actual script"
+            enabled = false
             scriptMode = script {
                 content = """
                     ${'$'}AuthHeader = @{
