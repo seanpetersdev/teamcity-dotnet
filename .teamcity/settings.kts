@@ -301,7 +301,7 @@ object Compile : BuildType({
             """.trimIndent()
         }
         script {
-            name = "Try again"
+            name = "Set deployer 2"
             scriptContent = """
                 #!/bin/bash
                 
