@@ -299,6 +299,29 @@ object Compile : BuildType({
                 fi
             """.trimIndent()
         }
+        script {
+            name = "Try again"
+            scriptContent = """
+                #!/bin/bash
+                
+                # set the deployment user for use if the deploy is triggered by git
+                if [[ "%teamcity.build.triggeredBy.username%" == "n/a" ]]
+                then
+                	gituser=${'$'}(git log -1 --pretty=format:'%an')
+                	if [[ -z ${'$'}{gituser} ]]
+                	then
+                		echo "Deployment triggered by Unknown"
+                		echo "##teamcity[setParameter name='deployment.user' value='Unknown']"
+                	else
+                		echo "Deployment triggered by  ${'$'}{gituser}"
+                		echo "##teamcity[setParameter name='deployment.user' value='${'$'}{gituser}']"
+                	fi
+                else
+                	echo "Deployment triggered by  %teamcity.build.triggeredBy.username%"
+                	echo "##teamcity[setParameter name='deployment.user' value='%teamcity.build.triggeredBy.username%']"
+                fi
+            """.trimIndent()
+        }
     }
 
     triggers {
