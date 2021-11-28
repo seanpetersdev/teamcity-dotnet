@@ -308,17 +308,16 @@ object Compile : BuildType({
                 if [[ "%teamcity.build.triggeredBy.username%" == "n/a" ]]
                 then
                 	gituser=${'$'}(git log -1 --pretty=format:'%an')
-                	if [[ -z ${'$'}{gituser} ]]
-                	then
-                		echo "Deployment triggered by Unknown"
-                		echo "##teamcity[setParameter name='deployment.user' value='Unknown']"
-                	else
-                		echo "Deployment triggered by  ${'$'}{gituser}"
-                		echo "##teamcity[setParameter name='deployment.user' value='${'$'}{gituser}']"
-                	fi
+                	echo "Deployment triggered by  ${'$'}{gituser}"
+                	echo "##teamcity[setParameter name='deployment.user' value='${'$'}{gituser}']"
                 else
                 	echo "Deployment triggered by  %teamcity.build.triggeredBy.username%"
                 	echo "##teamcity[setParameter name='deployment.user' value='%teamcity.build.triggeredBy.username%']"
+                fi
+                if [[ -z "%teamcity.build.triggeredBy.username%" ]]
+                then
+                    echo "Deployment triggered by  Unknown"
+                    echo "##teamcity[setParameter name='deployment.user' value='Unknown']"
                 fi
             """.trimIndent()
         }
