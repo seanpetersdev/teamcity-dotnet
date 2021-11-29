@@ -323,6 +323,10 @@ object Compile : BuildType({
                 fi
             """.trimIndent()
         }
+
+        notifyDeployTrack {
+            id = "NotifyDeployTrackStarting"
+        }
     }
 
     triggers {
