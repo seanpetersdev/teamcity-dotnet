@@ -327,6 +327,45 @@ object Compile : BuildType({
         notifyDeployTrack {
             id = "NotifyDeployTrackStarting"
         }
+
+        script {
+            name = "Check Service Is Running"
+            id = "CheckServiceIsRunning"
+            scriptContent = """                
+                #!/bin/bash       
+                status_code=${'$'}(curl -s -w '%{http_code}' --retry 2 --retry-delay 60 %website.url%/healthcheck)
+                if [ ${'$'}status_code -eq 200 ]; then
+                echo "Service is running!"    
+                else
+                echo "Service is not running."
+                exit 1
+                fi
+            """.trimIndent()
+            formatStderrAsError = true
+        }
+
+        script {
+            name = "npm install"
+            id = "NpmInstall"
+            enabled = true
+            scriptContent = """
+                cd postman
+                npm install
+            """.trimIndent()   
+            formatStderrAsError = false         
+        }
+
+        script {
+            name = "Run tests"
+            id = "RunTests"
+            enabled = true
+            scriptContent = """
+                cd postman
+                npm run test:%environment% 
+            """.trimIndent()    
+            formatStderrAsError = true      
+            dockerImage = "node:16"  
+        }
     }
 
     triggers {
