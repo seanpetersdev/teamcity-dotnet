@@ -308,6 +308,7 @@ object Compile : BuildType({
         }
         script {
             name = "Set deployer 2"
+            enabled = false
             executionMode = BuildStep.ExecutionMode.ALWAYS
             scriptContent = """
                 #!/bin/bash
