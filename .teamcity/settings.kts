@@ -56,7 +56,6 @@ object Compile : BuildType({
         param("teamcity.auth_endpoint", "/authenticationTest.html?csrf")
         param("env.RELEASE_NUMBER", "")
         param("env.AWS_ACCESS_KEY_ID", "AKIARU5HXEIKDO6UQV6Y")
-        param("AWS_SECRET_ACCESS_KEY", "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")
         param("teamcity.stage.build_config_id", "DotnetHelloWorld_Compile")
         password("teamcity.stage.auth_token", "credentialsJSON:be2340ee-fa95-4882-8491-4013dfaa46e1")
         param("teamcity.stage.server", "http://teamcity-server:8111")
