@@ -53,10 +53,11 @@ object Compile : BuildType({
 
     params {
         param("teamcity.build_queue_endpoint", "/app/rest/buildQueue")
-        param("teamcity.stage.build_config_id", "DotnetHelloWorld_Compile")
         param("teamcity.auth_endpoint", "/authenticationTest.html?csrf")
-        password("teamcity.stage.auth_token", "credentialsJSON:be2340ee-fa95-4882-8491-4013dfaa46e1")
         param("env.RELEASE_NUMBER", "")
+        param("env.AWS_ACCESS_KEY_ID", "AKIARU5HXEIKDO6UQV6Y")
+        param("teamcity.stage.build_config_id", "DotnetHelloWorld_Compile")
+        password("teamcity.stage.auth_token", "credentialsJSON:be2340ee-fa95-4882-8491-4013dfaa46e1")
         param("teamcity.stage.server", "http://teamcity-server:8111")
     }
 
