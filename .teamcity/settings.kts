@@ -269,6 +269,7 @@ object Compile : BuildType({
         }
         script {
             name = "Notify Deploy Track"
+            enabled = false
             scriptContent = """
                 #!/usr/bin/env bash
                 set -euo pipefail
