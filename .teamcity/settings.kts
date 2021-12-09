@@ -284,6 +284,7 @@ object Compile : BuildType({
         }
         script {
             name = "Set deployer"
+            enabled = false
             scriptContent = """
                 #!/bin/bash
                 
