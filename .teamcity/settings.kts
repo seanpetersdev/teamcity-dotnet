@@ -82,6 +82,7 @@ object Compile : BuildType({
         }
         dotnetRun {
             name = "run it"
+            projects = "TeamCityDotNet/TeamCityDotNet.csproj"
             param("dotNetCoverage.dotCover.home.path", "%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%")
         }
         script {
