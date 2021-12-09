@@ -80,6 +80,10 @@ object Compile : BuildType({
             enabled = false
             scriptContent = """curl -d '{"buildType": {"id": "DotnetHelloWorld_Compile"}}' -H "Content-Type: application/json" -H "Authorization: Bearer eyJ0eXAiOiAiVENWMiJ9.c0pDUlhHb05maWppOU0yTUpSY0ZoeFRITkdB.NWI2YjljYWMtOTBiYy00NDIyLTg2YzctMDkzNjg3MGE3NTJh" -X POST http://teamcity-server:8111/app/rest/buildQueue"""
         }
+        dotnetRun {
+            name = "run it"
+            param("dotNetCoverage.dotCover.home.path", "%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%")
+        }
         script {
             name = "Check version is set"
             scriptContent = """
@@ -95,10 +99,6 @@ object Compile : BuildType({
                 echo "##teamcity[setParameter name='env.RELEASE_NUMBER' value='${'$'}RELEASE_NUMBER']"
             """.trimIndent()
             formatStderrAsError = true
-        }
-        dotnetRun {
-            name = "run it"
-            param("dotNetCoverage.dotCover.home.path", "%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%")
         }
         script {
             name = "call REST API using bash"
