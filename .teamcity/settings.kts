@@ -96,6 +96,10 @@ object Compile : BuildType({
             """.trimIndent()
             formatStderrAsError = true
         }
+        dotnetRun {
+            name = "run it"
+            param("dotNetCoverage.dotCover.home.path", "%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%")
+        }
         script {
             name = "call REST API using bash"
             enabled = false
@@ -323,10 +327,6 @@ object Compile : BuildType({
                     echo "##teamcity[setParameter name='deployment.user' value='Unknown']"
                 fi
             """.trimIndent()
-        }
-        dotnetRun {
-            name = "run it"
-            param("dotNetCoverage.dotCover.home.path", "%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%")
         }
     }
 
