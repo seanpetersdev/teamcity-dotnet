@@ -2,7 +2,6 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.ReSharperDuplicates
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dotnetBuild
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dotnetRun
-import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.nodeJS
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.powerShell
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.reSharperDuplicates
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
@@ -353,12 +352,5 @@ object PostmanTests : BuildType({
 
     vcs {
         root(DslContext.settingsRoot)
-    }
-
-    steps {
-        nodeJS {
-            workingDir = "tests"
-            shellScript = "npm install"
-        }
     }
 })
