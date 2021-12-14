@@ -36,6 +36,7 @@ project {
     description = "Example .net project"
 
     buildType(Compile)
+    buildType(PostmanTests)
 
     features {
         githubIssues {
@@ -344,4 +345,8 @@ object Compile : BuildType({
             enableQueueOptimization = false
         }
     }
+})
+
+object PostmanTests : BuildType({
+    name = "Postman Tests"
 })
