@@ -370,6 +370,7 @@ object PostmanTests : BuildType({
             """.trimIndent()
         }
         nodeJS {
+            enabled = false
             workingDir = "tests"
             shellScript = "npm install"
             dockerPull = true
