@@ -349,4 +349,8 @@ object Compile : BuildType({
 
 object PostmanTests : BuildType({
     name = "Postman Tests"
+
+    vcs {
+        root(DslContext.settingsRoot)
+    }
 })
