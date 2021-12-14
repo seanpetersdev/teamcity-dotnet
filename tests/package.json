@@ -4,7 +4,7 @@
   "description": "Service Postman collection",
   "main": "index.js",
   "scripts": {
-    "runtest": "newman run ./tests/collection.json --color auto --disable-unicode --insecure --timeout-request 60000"
+    "runtest": "newman run ./tests/collection.json --verbose --color auto --disable-unicode --insecure --timeout-request 60000"
   },
   "author": "SP",
   "license": "ISC",
