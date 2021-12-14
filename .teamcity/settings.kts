@@ -2,6 +2,7 @@ import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.ReSharperDuplicates
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dotnetBuild
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dotnetRun
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.nodeJS
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.powerShell
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.reSharperDuplicates
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
@@ -36,6 +37,7 @@ project {
     description = "Example .net project"
 
     buildType(Compile)
+    buildType(PostmanTests)
 
     features {
         githubIssues {
@@ -342,6 +344,40 @@ object Compile : BuildType({
             perCheckinTriggering = true
             groupCheckinsByCommitter = true
             enableQueueOptimization = false
+        }
+    }
+})
+
+object PostmanTests : BuildType({
+    name = "Postman Tests"
+
+    params {
+        param("Delete_Auth_Header", "BLAHBLAH")
+    }
+
+    vcs {
+        root(DslContext.settingsRoot)
+    }
+
+    steps {
+        script {
+            name = "npm install"
+            workingDir = "tests"
+            scriptContent = "npm install"
+        }
+        script {
+            name = "run tests"
+            workingDir = "tests"
+            scriptContent = """
+                npm run runtest 
+                echo "Tests completed."
+            """.trimIndent()
+        }
+        nodeJS {
+            enabled = false
+            workingDir = "tests"
+            shellScript = "npm install"
+            dockerPull = true
         }
     }
 })
