@@ -353,4 +353,12 @@ object PostmanTests : BuildType({
     vcs {
         root(DslContext.settingsRoot)
     }
+
+    steps {
+        script {
+            name = "npm install"
+            workingDir = "tests"
+            scriptContent = "npm install"
+        }
+    }
 })
