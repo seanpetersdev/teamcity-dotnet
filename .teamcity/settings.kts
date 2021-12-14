@@ -351,6 +351,10 @@ object Compile : BuildType({
 object PostmanTests : BuildType({
     name = "Postman Tests"
 
+    params {
+        param("env.Delete_Auth_Header", "BLAHBLAH")
+    }
+
     vcs {
         root(DslContext.settingsRoot)
     }
