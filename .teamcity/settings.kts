@@ -372,6 +372,7 @@ object PostmanTests : BuildType({
         nodeJS {
             workingDir = "tests"
             shellScript = "npm install"
+            dockerPull = true
         }
     }
 })
