@@ -360,13 +360,5 @@ object PostmanTests : BuildType({
             workingDir = "tests"
             shellScript = "npm install"
         }
-        script {
-            name = "run tests"
-            scriptContent = """
-                cd postman
-                npm run runtest 
-                echo "Tests completed."
-            """.trimIndent()
-        }
     }
 })
