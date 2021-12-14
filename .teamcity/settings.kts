@@ -360,9 +360,5 @@ object PostmanTests : BuildType({
             workingDir = "tests"
             shellScript = "npm install"
         }
-        nodeJS {
-            workingDir = "tests"
-            shellScript = "npm install"
-        }
     }
 })
