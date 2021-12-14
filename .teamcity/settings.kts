@@ -352,7 +352,7 @@ object PostmanTests : BuildType({
     name = "Postman Tests"
 
     params {
-        param("Delete_Auth_Header", "BLAHBLAH")
+        param("env.Delete_Auth_Header", "BLAHBLAH")
     }
 
     vcs {
@@ -369,6 +369,7 @@ object PostmanTests : BuildType({
             name = "run tests"
             workingDir = "tests"
             scriptContent = """
+                export HEADER="%env.Delete_Auth_Header%"
                 npm run runtest 
                 echo "Tests completed."
             """.trimIndent()
