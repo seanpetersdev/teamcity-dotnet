@@ -17,12 +17,12 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/app/rest/server",
+					"raw": "http://localhost:8111/app/rest/server",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8111",
 					"path": [
 						"app",
 						"rest",
