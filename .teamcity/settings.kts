@@ -353,6 +353,7 @@ object PostmanTests : BuildType({
 
     params {
         param("env.Delete_Auth_Header", "BLAHBLAH")
+        password("env.SecretTest", "credentialsJSON:f0109709-9459-40c8-ab2f-122d462c5989", label = "pass")
     }
 
     vcs {
