@@ -370,7 +370,7 @@ object PostmanTests : BuildType({
             name = "run tests"
             workingDir = "tests"
             scriptContent = """
-                npm run runtest 
+                npm run runtest
                 echo "Tests completed."
             """.trimIndent()
         }
