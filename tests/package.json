@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "runtest": "newman run ./tests/collection.json --verbose --color auto --disable-unicode --insecure --timeout-request 60000 --env-var Delete_Auth_Header=$npm_config_Delete_Auth_Header",
-    "runtest-win": "newman run ./tests/collection.json --verbose --color auto --disable-unicode --insecure --timeout-request 60000 --env-var Delete_Auth_Header=%npm_config_Delete_Auth_Header%"
+    "runtest-win": "newman run ./tests/collection.json --verbose --color auto --disable-unicode --insecure --timeout-request 60000 --env-var Delete_Auth_Header=%npm_config_Delete_Auth_Header%",
+    "runtest-both": "cross-var newman run ./tests/collection.json --verbose --color auto --disable-unicode --insecure --timeout-request 60000 --env-var Delete_Auth_Header=$npm_config_Delete_Auth_Header"
   },
   "author": "SP",
   "license": "ISC",
   "dependencies": {
+    "cross-var": "^1.1.0",
     "newman": "^4.5.5",
     "newman-reporter-teamcity": "^0.1.7"
   }
