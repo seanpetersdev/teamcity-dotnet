@@ -352,8 +352,8 @@ object PostmanTests : BuildType({
     name = "Postman Tests"
 
     params {
-        param("env.Delete_Auth_Header", "BLAHBLAH")
         password("env.SecretTest", "credentialsJSON:f0109709-9459-40c8-ab2f-122d462c5989", label = "pass")
+        password("env.Delete_Auth_Header", "credentialsJSON:751b6798-1c57-4e68-a556-dfd702ecbef6")
     }
 
     vcs {
