@@ -38,6 +38,7 @@ project {
 
     buildType(Compile)
     buildType(PostmanTests)
+    buildType(PostmanTestsPowershell)
 
     features {
         githubIssues {
@@ -352,8 +353,43 @@ object PostmanTests : BuildType({
     name = "Postman Tests"
 
     params {
-        password("env.SecretTest", "credentialsJSON:f0109709-9459-40c8-ab2f-122d462c5989", label = "pass")
         password("env.Delete_Auth_Header", "credentialsJSON:be2340ee-fa95-4882-8491-4013dfaa46e1")
+        password("env.SecretTest", "credentialsJSON:f0109709-9459-40c8-ab2f-122d462c5989", label = "pass")
+    }
+
+    vcs {
+        root(DslContext.settingsRoot)
+    }
+
+    steps {
+        script {
+            name = "npm install"
+            workingDir = "tests"
+            scriptContent = "npm install"
+        }
+        script {
+            name = "run tests"
+            workingDir = "tests"
+            scriptContent = """
+                npm run runtest --Delete_Auth_Header=%env.Delete_Auth_Header%
+                echo "Tests completed."
+            """.trimIndent()
+        }
+        nodeJS {
+            enabled = false
+            workingDir = "tests"
+            shellScript = "npm install"
+            dockerPull = true
+        }
+    }
+})
+
+object PostmanTestsPowershell : BuildType({
+    name = "Postman Tests Powershell"
+
+    params {
+        password("env.Delete_Auth_Header", "credentialsJSON:be2340ee-fa95-4882-8491-4013dfaa46e1")
+        password("env.SecretTest", "credentialsJSON:f0109709-9459-40c8-ab2f-122d462c5989", label = "pass")
     }
 
     vcs {
