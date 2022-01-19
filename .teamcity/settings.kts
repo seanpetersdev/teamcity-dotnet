@@ -1,4 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.PowerShellStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.ReSharperDuplicates
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dotnetBuild
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dotnetRun
@@ -38,6 +39,7 @@ project {
 
     buildType(Compile)
     buildType(PostmanTests)
+    buildType(PostmanTestsPowershell)
 
     features {
         githubIssues {
@@ -352,7 +354,7 @@ object PostmanTests : BuildType({
     name = "Postman Tests"
 
     params {
-        param("env.Delete_Auth_Header", "BLAHBLAH")
+        password("env.Delete_Auth_Header", "credentialsJSON:be2340ee-fa95-4882-8491-4013dfaa46e1")
         password("env.SecretTest", "credentialsJSON:f0109709-9459-40c8-ab2f-122d462c5989", label = "pass")
     }
 
@@ -373,6 +375,44 @@ object PostmanTests : BuildType({
                 npm run runtest --Delete_Auth_Header=%env.Delete_Auth_Header%
                 echo "Tests completed."
             """.trimIndent()
+        }
+        nodeJS {
+            enabled = false
+            workingDir = "tests"
+            shellScript = "npm install"
+            dockerPull = true
+        }
+    }
+})
+
+object PostmanTestsPowershell : BuildType({
+    name = "Postman Tests Powershell"
+
+    params {
+        password("env.Delete_Auth_Header", "credentialsJSON:be2340ee-fa95-4882-8491-4013dfaa46e1")
+        password("env.SecretTest", "credentialsJSON:f0109709-9459-40c8-ab2f-122d462c5989", label = "pass")
+    }
+
+    vcs {
+        root(DslContext.settingsRoot)
+    }
+
+    steps {
+        script {
+            name = "npm install"
+            workingDir = "tests"
+            scriptContent = "npm install"
+        }
+        powerShell {
+            name = "run tests"
+            platform = PowerShellStep.Platform.x86
+            edition = PowerShellStep.Edition.Desktop
+            scriptMode = script {
+                content = """
+                    cd tests
+                    npm run runtest-win --Delete_Auth_Header=%env.Delete_Auth_Header%
+                """.trimIndent()
+            }
         }
         nodeJS {
             enabled = false
