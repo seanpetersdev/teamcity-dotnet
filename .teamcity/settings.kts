@@ -1,4 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.PowerShellStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.ReSharperDuplicates
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dotnetBuild
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dotnetRun
@@ -402,13 +403,13 @@ object PostmanTestsPowershell : BuildType({
             workingDir = "tests"
             scriptContent = "npm install"
         }
-        script {
+        powerShell {
             name = "run tests"
-            workingDir = "tests"
-            scriptContent = """
-                npm run runtest --Delete_Auth_Header=%env.Delete_Auth_Header%
-                echo "Tests completed."
-            """.trimIndent()
+            platform = PowerShellStep.Platform.x86
+            edition = PowerShellStep.Edition.Desktop
+            scriptMode = script {
+                content = "npm run runtest --Delete_Auth_Header=%env.Delete_Auth_Header%"
+            }
         }
         nodeJS {
             enabled = false
