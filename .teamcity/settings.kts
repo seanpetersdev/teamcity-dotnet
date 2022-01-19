@@ -410,7 +410,7 @@ object PostmanTestsPowershell : BuildType({
             scriptMode = script {
                 content = """
                     cd tests
-                    npm run runtest --Delete_Auth_Header=%env.Delete_Auth_Header%
+                    npm run runtest-win --Delete_Auth_Header=%env.Delete_Auth_Header%
                 """.trimIndent()
             }
         }
