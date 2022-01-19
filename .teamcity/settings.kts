@@ -370,7 +370,7 @@ object PostmanTests : BuildType({
             name = "run tests"
             workingDir = "tests"
             scriptContent = """
-                npm run runtest --myvar=testing123
+                npm run runtest --Delete_Auth_Header=%env.Delete_Auth_Header%
                 echo "Tests completed."
             """.trimIndent()
         }
