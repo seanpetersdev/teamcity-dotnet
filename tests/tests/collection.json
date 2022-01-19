@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1ea5f13f-2151-4efd-a8c7-d6eafc18ffb3",
+		"_postman_id": "935acecd-28e8-460b-83f4-596346a16d1d",
 		"name": "Teamcity - test postman Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,6 +14,11 @@
 						"exec": [
 							"pm.test(\"Authorization header is correct\", () => {\r",
 							"  var header = pm.request.headers.get('Authorization');\r",
+							"  console.log(header);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Authorization header exists\", () => {\r",
+							"  var header = pm.request.headers.get('DELETE_AUTHENTICATION_HEADER');\r",
 							"  console.log(header);\r",
 							"});"
 						],
