@@ -352,8 +352,8 @@ object PostmanTests : BuildType({
     name = "Postman Tests"
 
     params {
-        password("env.SecretTest", "credentialsJSON:f0109709-9459-40c8-ab2f-122d462c5989", label = "pass")
         password("env.Delete_Auth_Header", "credentialsJSON:751b6798-1c57-4e68-a556-dfd702ecbef6")
+        password("env.SecretTest", "credentialsJSON:f0109709-9459-40c8-ab2f-122d462c5989", label = "pass")
     }
 
     vcs {
@@ -370,7 +370,7 @@ object PostmanTests : BuildType({
             name = "run tests"
             workingDir = "tests"
             scriptContent = """
-                npm run runtest --Delete_Auth_Header=%env.Delete_Auth_Header%
+                npm run runtest --Delete_Auth_HeaderSDEF=%env.Delete_Auth_Header%
                 echo "Tests completed."
             """.trimIndent()
         }
