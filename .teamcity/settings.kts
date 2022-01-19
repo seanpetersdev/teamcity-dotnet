@@ -408,7 +408,10 @@ object PostmanTestsPowershell : BuildType({
             platform = PowerShellStep.Platform.x86
             edition = PowerShellStep.Edition.Desktop
             scriptMode = script {
-                content = "npm run runtest --Delete_Auth_Header=%env.Delete_Auth_Header%"
+                content = """
+                    cd tests
+                    npm run runtest --Delete_Auth_Header=%env.Delete_Auth_Header%
+                """.trimIndent()
             }
         }
         nodeJS {
