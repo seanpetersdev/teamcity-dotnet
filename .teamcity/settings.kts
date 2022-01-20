@@ -414,6 +414,9 @@ object PostmanTestsBoth : BuildType({
                     npm run runtest-both --Delete_Auth_Header=%env.Delete_Auth_Header%
                 """.trimIndent()
             }
+            param("plugin.docker.imagePlatform", "linux")
+            param("plugin.docker.imageId", "node:16")
+            param("plugin.docker.run.parameters", "--build-arg Delete_Auth_Token=%env.Delete_AuthToken%")
         }
         nodeJS {
             enabled = false
