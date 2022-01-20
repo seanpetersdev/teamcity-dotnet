@@ -415,7 +415,6 @@ object PostmanTestsBoth : BuildType({
                 """.trimIndent()
             }
             args = "%env.Delete_Auth_Header%"
-            param("plugin.docker.imagePlatform", "linux")
             param("plugin.docker.imageId", "node:16")
             param("plugin.docker.run.parameters", "%env.Delete_Auth_Header%")
         }
