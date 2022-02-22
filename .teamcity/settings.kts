@@ -469,4 +469,10 @@ object PostmanTestsPowershell : BuildType({
 
 object TestSubProject : Project({
     name = "TestSubProject"
+
+    buildType(TestSubProject_BuildMaster)
+})
+
+object TestSubProject_BuildMaster : BuildType({
+    name = "Build (master)"
 })
