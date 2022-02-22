@@ -49,6 +49,8 @@ project {
             repositoryURL = "https://github.com/infojolt/teamcity-dotnet"
         }
     }
+
+    subProject(TestSubProject)
 }
 
 object Compile : BuildType({
@@ -462,4 +464,9 @@ object PostmanTestsPowershell : BuildType({
             dockerPull = true
         }
     }
+})
+
+
+object TestSubProject : Project({
+    name = "TestSubProject"
 })
