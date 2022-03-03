@@ -59,6 +59,7 @@ object Compile : BuildType({
     artifactRules = "TeamCityDotNet/bin/Debug/netcoreapp3.1 => TeamCityDotNet.zip"
 
     params {
+        param("teamcity.ui.settings.readOnly", "true")
         param("teamcity.build_queue_endpoint", "/app/rest/buildQueue")
         param("teamcity.auth_endpoint", "/authenticationTest.html?csrf")
         param("env.AWS_SECRET_ACCESS_KEY", "4PxW/vROArn9K6F21KzPxy6fUSPtcqKDS+5MCDmS")
